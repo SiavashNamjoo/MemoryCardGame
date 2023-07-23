@@ -2,16 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Card
 {
-    private bool isFacedUp = false;
-    public int Value;
+    public int Value { get; set; }
     
-    private int GetValue()
-    {
-        return Value;
-    }
     public Card(int value)
     {
         Value = value;
