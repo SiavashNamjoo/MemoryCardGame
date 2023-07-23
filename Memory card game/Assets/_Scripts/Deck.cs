@@ -7,8 +7,13 @@ using Random = UnityEngine.Random;
 
 public class Deck
 {
-    public List<Card> card = new List<Card>();
-    
+    public List<Card> card;
+
+    public Deck(List<Card> card)
+    {
+        this.card = card;
+    }
+
     public void EqualCard(int card1, int card2)
     {
         if (card1 == card2)
@@ -21,18 +26,16 @@ public class Deck
         }
     }
 
+    
     public void GenerateRandomCard()
     {
-        
-        int index = card.Count;
-        
+        var index = card.Count;
+
         while (index > 1)
         {
             index--;
-            int k = Random.Range(0, index + 1);
-            Card temp = card[k];
-            card[k] = card[index];
-            card[index] = temp;
+            int k = Random.Range(0, index) ;
+            (card[k], card[index]) = (card[index], card[k]);
         }
     }
 }
