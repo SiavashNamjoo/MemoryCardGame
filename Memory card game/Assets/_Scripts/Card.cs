@@ -6,10 +6,13 @@ using Random = UnityEngine.Random;
 
 public class Card
 {
-    public int Value { get; set; }
+    public int value;
+    private bool isMatched;
+    
     
     public Card(int value)
     {
-        Value = value;
+        this.value = value;
+        isMatched = false;
     }
 }
