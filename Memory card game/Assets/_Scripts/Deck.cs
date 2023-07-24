@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class Deck
 {
     public List<Card> card;
-    private List<int> cardIndex;
+    
 
     public int GetCardCount()
     {
@@ -18,24 +18,30 @@ public class Deck
 
     public void IsEqual()
     {
-        for (int i = 0; i < card.Count; i++)
+        foreach (var t in card)
         {
-            for (int j = 0; j < card.Count; j++)
+            foreach (var t1 in card)
             {
-                if (!card[i].isMatched && !card[j].isMatched && card[i].value == card[j].value)
+                if (!t.isMatched && !t1.isMatched && t.value == t1.value)
                 {
-                    card[i].isMatched = true;
-                    card[j].isMatched = true;
+                    t.isMatched = true;
+                    t1.isMatched = true;
                     break;
                 }
             }
         }
     }
 
-    void RemoveCard()
+    public void RemoveCard()
     {
         IsEqual();
-        card.RemoveAll(_card => _card.isMatched);
+        for (int i = card.Count - 1; i >= 0; i--)
+        {
+            if (card[i].isMatched)
+            {
+                card.RemoveAt(i);
+            }
+        }
     }
     public Deck(List<Card> card)
     {
@@ -58,5 +64,13 @@ public class Deck
     {
         card.Add(new Card(value));
         card.Add(new Card(value));
+    }
+
+    public void HideNumbers()
+    {
+        for (int i = 0; i < card.Count; i++)
+        
+            Debug.Log("Card number: " + i + card[i].value);
+        
     }
 }

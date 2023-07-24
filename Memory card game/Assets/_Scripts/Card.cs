@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class Card
 {
     public int value;
-    private bool isMatched;
+    public bool isMatched;
     
     
     public Card(int value)
