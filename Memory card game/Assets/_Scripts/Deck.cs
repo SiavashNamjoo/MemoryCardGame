@@ -5,7 +5,7 @@ using System.Dynamic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
+// lambda  ??? chat-gpt ;) RemoveCard method
 public class Deck
 {
     public List<Card> card;
@@ -16,33 +16,26 @@ public class Deck
         return card.Count;
     }
 
-    public bool IsEqual()
+    public void IsEqual()
     {
-        card = new List<Card>();
-        if (card.Count == 2)
+        for (int i = 0; i < card.Count; i++)
         {
-            Card i = card[cardIndex[0]];
-            Card j = card[cardIndex[1]];
-            if (i == j)
+            for (int j = 0; j < card.Count; j++)
             {
-                RemoveCard();
-                return true;
-            }
-            else
-            {
-                Debug.Log("Try Again!!");
+                if (!card[i].isMatched && !card[j].isMatched && card[i].value == card[j].value)
+                {
+                    card[i].isMatched = true;
+                    card[j].isMatched = true;
+                    break;
+                }
             }
         }
-
-        return false;
     }
 
     void RemoveCard()
     {
-        foreach (int index in cardIndex)
-        {
-            card.RemoveAt(index);
-        }
+        IsEqual();
+        card.RemoveAll(_card => _card.isMatched);
     }
     public Deck(List<Card> card)
     {
@@ -53,7 +46,6 @@ public class Deck
     {
        System.Random random = new System.Random();
         var index = card.Count;
-
         while (index > 1)
         {
             index--;
@@ -62,7 +54,7 @@ public class Deck
         }
     }
 
-    private void AddCard(int value)
+    public void AddCard(int value)
     {
         card.Add(new Card(value));
         card.Add(new Card(value));
