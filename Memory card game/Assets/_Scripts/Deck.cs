@@ -10,6 +10,7 @@ public class Deck
 {
     private List<Card> cards;
     private List<bool> isCardsHidden; 
+    
     public int GetCardCount()
     {
         return cards.Count;
@@ -89,4 +90,15 @@ public class Deck
                 Debug.Log("Card Value: " + cards[i].Value);
         }
     }
+
+    public void CheckCards(int FirstInput, int SecondInput)
+    {
+        if (FirstInput == SecondInput)
+        {
+            TurnOnCard(FirstInput);
+        }
+    }
+    
+        
+    
 }
