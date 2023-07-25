@@ -8,69 +8,87 @@ using Random = UnityEngine.Random;
 // lambda  ??? chat-gpt ;) RemoveCard method
 public class Deck
 {
-    public List<Card> card;
-    
-
+    public List<Card> cards;
+    public List<bool> isCardsHidden; 
     public int GetCardCount()
     {
-        return card.Count;
+        return cards.Count;
     }
-
-    public void IsEqual()
-    {
-        foreach (var t in card)
+    public void RemoveEqualNumbers(List<Card> card, int num1, int num2)
         {
-            foreach (var t1 in card)
+            if (num1 == num2)
             {
-                if (!t.isMatched && !t1.isMatched && t.value == t1.value)
-                {
-                    t.isMatched = true;
-                    t1.isMatched = true;
-                    break;
-                }
+                card.RemoveAll(num => num1 == num2);
+            }
+            else
+            {
+                Debug.Log("Numbers you choose in not equal try again!");
             }
         }
-    }
-
-    public void RemoveCard()
+    public Deck(List<Card> cards)
     {
-        IsEqual();
-        for (int i = card.Count - 1; i >= 0; i--)
+        this.cards = cards;
+        this.isCardsHidden = new List<bool>();
+        for (int i = 0; i < isCardsHidden.Count; i++)
         {
-            if (card[i].isMatched)
-            {
-                card.RemoveAt(i);
-            }
+            isCardsHidden.Add(true);
         }
     }
-    public Deck(List<Card> card)
-    {
-        this.card = card;
-    }
-    
     public void GenerateRandomCard()
     {
        System.Random random = new System.Random();
-        var index = card.Count;
+        var index = cards.Count;
         while (index > 1)
         {
             index--;
             int k = random.Next(index + 1);
-            (card[k], card[index]) = (card[index], card[k]);
+            (cards[k], cards[index]) = (cards[index], cards[k]);
+        }
+    }
+    public void AddCard(int value)
+    {
+        cards.Add(new Card(value));
+        cards.Add(new Card(value));
+    }
+    
+    
+    public void HideCard(int index)
+    {
+        var card = cards[index];
+        Debug.Log(cards[index].Value);
+    }
+
+    public void HideAllCards()
+    {
+        for (int i = 0; i < isCardsHidden.Count; i++)
+        {
+            isCardsHidden.Add(false);
         }
     }
 
-    public void AddCard(int value)
+    public void TurnOnCard(int index)
     {
-        card.Add(new Card(value));
-        card.Add(new Card(value));
+        var card = cards[index];
+        Debug.Log(card.Value);
     }
 
-    public void HideNumbers()
+    public void TrunOnAllCard()
     {
-        for (int i = 0; i < card.Count; i++)
-        
-            Debug.Log("Card number: " + i + card[i].value);
-        
+        for (int i = 0; i < isCardsHidden.Count; i++)
+        {
+            isCardsHidden.Add(true);
+        }
+    }
+
+    public void DisplayDeck()
+    {
+        for (var i = 0; i < cards.Count; i++)
+        {
+            var card = cards[i];
+            if (isCardsHidden[i])
+                Debug.Log(i);
+            else
+                Debug.Log(cards[i].Value);
+        }
     }
 }
