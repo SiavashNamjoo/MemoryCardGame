@@ -8,8 +8,8 @@ using Random = UnityEngine.Random;
 // lambda  ??? chat-gpt ;) RemoveCard method
 public class Deck
 {
-    public List<Card> cards;
-    public List<bool> isCardsHidden; 
+    private List<Card> cards;
+    private List<bool> isCardsHidden; 
     public int GetCardCount()
     {
         return cards.Count;
@@ -29,11 +29,12 @@ public class Deck
     {
         this.cards = cards;
         this.isCardsHidden = new List<bool>();
-        for (int i = 0; i < isCardsHidden.Count; i++)
+        for (int i = 0; i < cards.Count; i++)
         {
             isCardsHidden.Add(true);
         }
     }
+
     public void GenerateRandomCard()
     {
        System.Random random = new System.Random();
@@ -45,50 +46,47 @@ public class Deck
             (cards[k], cards[index]) = (cards[index], cards[k]);
         }
     }
+    
     public void AddCard(int value)
     {
         cards.Add(new Card(value));
-        cards.Add(new Card(value));
+        isCardsHidden.Add(true);
     }
     
     
-    public void HideCard(int index)
+    public void TurnOffCard(int index)
     {
-        var card = cards[index];
-        Debug.Log(cards[index].Value);
+        isCardsHidden[index] = true;
     }
 
-    public void HideAllCards()
+    public void TurnOffAllCards()
     {
         for (int i = 0; i < isCardsHidden.Count; i++)
         {
-            isCardsHidden.Add(false);
+            isCardsHidden[i] = true;
         }
     }
-
     public void TurnOnCard(int index)
     {
-        var card = cards[index];
-        Debug.Log(card.Value);
-    }
+        isCardsHidden[index] = false;
 
+    }
     public void TrunOnAllCard()
     {
         for (int i = 0; i < isCardsHidden.Count; i++)
         {
-            isCardsHidden.Add(true);
+            isCardsHidden[i] = false;
         }
     }
-
     public void DisplayDeck()
     {
         for (var i = 0; i < cards.Count; i++)
         {
             var card = cards[i];
             if (isCardsHidden[i])
-                Debug.Log(i);
+                Debug.Log("Card " + i + " Hidden");
             else
-                Debug.Log(cards[i].Value);
+                Debug.Log("Card Value: " + cards[i].Value);
         }
     }
 }
