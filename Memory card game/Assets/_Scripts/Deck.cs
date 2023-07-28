@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class Deck
 {
     private List<Card> cards;
-    private List<bool> isCardsHidden; 
+    public List<bool> isCardsHidden; 
     
     public int GetCardCount()
     {
@@ -98,7 +98,23 @@ public class Deck
             TurnOnCard(FirstInput);
         }
     }
-    
+   
+    public void OnButtonClick(int index)
+    {
+        if (index >= 0 && index < cards.Count)
+        {
+            Card selectCard = cards[index];
+            if (isCardsHidden[index])
+            {
+                int realNumber = selectCard.Value;
+                Debug.Log("Real numbers " + index + " is: " + realNumber);
+            }
+            else
+            {
+                Debug.Log("Invalid Input Please Try agian");
+            }
+        }
+    }
         
     
 }
