@@ -9,23 +9,8 @@ using Random = UnityEngine.Random;
 public class Deck
 {
     private List<Card> cards;
-    public List<bool> isCardsHidden; 
+    public List<bool> isCardsHidden;
     
-    public int GetCardCount()
-    {
-        return cards.Count;
-    }
-    public void RemoveEqualNumbers(List<Card> card, int num1, int num2)
-        {
-            if (num1 == num2)
-            {
-                card.RemoveAll(num => num1 == num2);
-            }
-            else
-            {
-                Debug.Log("Numbers you choose in not equal try again!");
-            }
-        }
     public Deck(List<Card> cards)
     {
         this.cards = cards;
@@ -35,7 +20,6 @@ public class Deck
             isCardsHidden.Add(true);
         }
     }
-
     public void GenerateRandomCard()
     {
        System.Random random = new System.Random();
@@ -47,14 +31,29 @@ public class Deck
             (cards[k], cards[index]) = (cards[index], cards[k]);
         }
     }
-    
-    public void AddCard(int value)
+
+    public int GetCardNumber(int index)
     {
-        cards.Add(new Card(value));
-        isCardsHidden.Add(true);
+        if (index >= 0 && index < cards.Count)
+        {
+            return cards[index].Value;
+        }
+
+        return -1;
     }
-    
-    
+
+    public void RemoveEqualNumbers(int number)
+    {
+        for (int i = 0; i < cards.Count; i++)
+        {
+            if (cards[i].Value != number)
+            {
+                cards.Add(cards[i]);
+                isCardsHidden.Add(true);
+            }
+        }
+    }
+
     public void TurnOffCard(int index)
     {
         isCardsHidden[index] = true;
@@ -67,11 +66,13 @@ public class Deck
             isCardsHidden[i] = true;
         }
     }
+
     public void TurnOnCard(int index)
     {
         isCardsHidden[index] = false;
 
     }
+
     public void TrunOnAllCard()
     {
         for (int i = 0; i < isCardsHidden.Count; i++)
@@ -90,31 +91,10 @@ public class Deck
                 Debug.Log("Card Value: " + cards[i].Value);
         }
     }
-
-    public void CheckCards(int FirstInput, int SecondInput)
+    public void AddCard(int value)
     {
-        if (FirstInput == SecondInput)
-        {
-            TurnOnCard(FirstInput);
-        }
+        cards.Add(new Card(value));
+        isCardsHidden.Add(true);
     }
-   
-    public void OnButtonClick(int index)
-    {
-        if (index >= 0 && index < cards.Count)
-        {
-            Card selectCard = cards[index];
-            if (isCardsHidden[index])
-            {
-                int realNumber = selectCard.Value;
-                Debug.Log("Real numbers " + index + " is: " + realNumber);
-            }
-            else
-            {
-                Debug.Log("Invalid Input Please Try agian");
-            }
-        }
-    }
-        
     
 }
